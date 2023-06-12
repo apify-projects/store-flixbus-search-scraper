@@ -1,0 +1,89 @@
+{
+    "title": "Input schema for the empty project actor.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "website": {
+            "title": "Website",
+            "type": "string",
+            "description": "This is top level domain that will determine in what language will the input and output be. Note that this is really important, for example if i enter 'cz' and then i go from Brno to Prague, it will not work because Prague is in English, so i have two options in this scenario. I can change it to 'com' for example or i can change from 'Prague' to 'Praha', which is Prague in czech",
+            "default": "com",
+            "editor": "textfield"
+        },
+        "from": {
+            "title": "From",
+            "type": "string",
+            "description": "This is the departing city. Note that it is key sensitive.",
+            "default": "Berlin",
+            "editor": "textfield"
+        },
+        "to": {
+            "title": "To",
+            "type": "string",
+            "default": "Prague",
+            "description": "This is the arrival city. Note that it is key sensitive.",
+            "editor": "textfield"
+        },
+        "rideDate": {
+            "title": "Date",
+            "type": "string",
+            "description": "Date of the trip.",
+            "editor": "datepicker"
+        },
+
+        "adults": {
+            "title": "Adults",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of adults traveling.",
+            "editor": "number",
+            "minimum": 0
+        },
+
+        "students": {
+            "title": "Students",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of students traveling, note that students are required to show valid Student ID.",
+            "editor": "number",
+            "minimum": 0
+        },
+
+        "children_0_5": {
+            "title": "Children (0-5)",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of children (0 to 5 years old) traveling.",
+            "editor": "number",
+            "minimum": 0
+        },
+
+        "children_6_17": {
+            "title": "Children (6-17)",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of children (6 to 17 years old) traveling.",
+            "editor": "number",
+            "minimum": 0
+        },
+
+        "seniors": {
+            "title": "Seniors",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of seniors (older than 65 years old) traveling.",
+            "editor": "number",
+            "minimum": 0
+        },
+
+        "bikes": {
+            "title": "Bikes",
+            "type": "integer",
+            "default": 0,
+            "description": "Select number of bike slots, note that E-bikes and scooters are not allowed on buses.",
+            "editor": "number",
+            "minimum": 0
+        }
+    },
+    "required": ["website", "from", "to", "rideDate"]
+}
