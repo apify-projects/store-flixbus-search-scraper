@@ -30,16 +30,15 @@
             "description": "Date of the trip.",
             "editor": "datepicker"
         },
-        "adults": {
+        "adult": {
             "title": "Adults",
             "type": "integer",
-            "default": 0,
+            "default": 1,
             "description": "Select number of adults traveling.",
             "editor": "number",
-            "prefill": 0,
             "minimum": 0
         },
-        "students": {
+        "student": {
             "title": "Students",
             "type": "integer",
             "default": 0,
@@ -63,25 +62,22 @@
             "default": 0,
             "description": "Select number of children (6 to 17 years old) traveling.",
             "editor": "number",
-            "prefill": 0,
             "minimum": 0
         },
-        "seniors": {
+        "senior": {
             "title": "Seniors",
             "type": "integer",
             "default": 0,
             "description": "Select number of seniors (older than 65 years old) traveling.",
             "editor": "number",
-            "prefill": 0,
             "minimum": 0
         },
-        "bikes": {
+        "bike_slot": {
             "title": "Bikes",
             "type": "integer",
             "default": 0,
             "description": "Select number of bike slots, note that E-bikes and scooters are not allowed on buses.",
             "editor": "number",
-            "prefill": 0,
             "minimum": 0
         }
     },
