@@ -39,12 +39,13 @@ if (sumOfPassengers <= 0) {
     Actor.fail()
 }
 
-const startUrls = ['https://apify.com'];
-
-//const proxyConfiguration = await Actor.createProxyConfiguration();
+const proxyConfiguration = await Actor.createProxyConfiguration({
+    groups: ['RESIDENTIAL'],
+    countryCode: 'FR',
+});
 
 const crawler = new PlaywrightCrawler({
-    //proxyConfiguration,
+    proxyConfiguration,
     requestHandler: router,
 });
 
