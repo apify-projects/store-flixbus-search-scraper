@@ -4,8 +4,10 @@ const extractNumberAndSymbol = (textPrice: string) => {
 
     const isNumber = (letter: string) => !isNaN(+letter);
 
-    for (let i = 0; i < textPrice.length; i++) {
-        const letter = textPrice[i]
+    const joinedTextPrice = textPrice.replace(/\s/g, "")
+
+    for (let i = 0; i < joinedTextPrice.length; i++) {
+        const letter = joinedTextPrice[i]
 
         if(isNumber(letter)) {
             priceFloatString = priceFloatString + letter
@@ -21,7 +23,7 @@ const extractNumberAndSymbol = (textPrice: string) => {
     return {
         price: parseFloat(priceFloatString),
         symbol,
-        text: textPrice
+        text: joinedTextPrice
     }
 };
 

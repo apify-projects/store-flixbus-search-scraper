@@ -22,13 +22,26 @@ router.addHandler('START', async ({ request, page, log, crawler }) => {
     const keyboard = page.keyboard
 
     // Type and select from place -> to place
-    await page.type("#searchInput-from", from)
-    await page.waitForTimeout(650)
+    await page.click("#searchInput-from")
+    //await page.type("#searchInput-from", from)
+    async function slowType(page: any, selector: string, text: string, delay: number) {
+        const element = await page.$(selector);
+        for (let i = 0; i < text.length; i++) {
+          await element.type(text[i], { delay });
+          await page.waitForTimeout(delay);
+        }
+    }
+
+    await slowType(page, "#searchInput-from", from, 200)
+
+
+    await page.waitForTimeout(500)
     await keyboard.press("ArrowDown")
     await keyboard.press("Enter")
 
-    await page.type("#searchInput-to", to)
-    await page.waitForTimeout(650)
+    await page.click("#searchInput-to")
+    await slowType(page, "#searchInput-to", to, 200)
+    await page.waitForTimeout(500)
     await keyboard.press("ArrowDown")
     await keyboard.press("Enter")
 

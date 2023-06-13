@@ -15,19 +15,19 @@ import { router } from './routes.js';
 await Actor.init();
 
 interface InputData {
-    website?: string;
-    from?: string;
-    to?: string;
-    rideDate?: string;
-    adult?: number;
-    student?: number;
-    children_0_5?: number;
-    children_6_17?: number;
-    bike_slot?: number;
-    senior?: number;
+    website: string;
+    from: string;
+    to: string;
+    rideDate: string;
+    adult: number;
+    student: number;
+    children_0_5: number;
+    children_6_17: number;
+    bike_slot: number;
+    senior: number;
 }
 
-let {website = "com", from = "Berlin", to = "Prague", rideDate = "2023-06-17", adult = 1, student = 0, children_0_5 = 0, children_6_17 = 0, bike_slot = 0, senior = 0}: InputData = await Actor.getInput() as InputData;
+let {website, from, to, rideDate, adult, student, children_0_5, children_6_17, bike_slot, senior}: InputData = await Actor.getInput() as InputData;
 
 rideDate = reformatInputToFlixbusDateString(rideDate) // for example 2023-06-19 > 19.06.2023
 
@@ -47,6 +47,7 @@ const proxyConfiguration = await Actor.createProxyConfiguration({
 const crawler = new PlaywrightCrawler({
     proxyConfiguration,
     requestHandler: router,
+    headless: false
 });
 
 await crawler.run([
