@@ -4,11 +4,11 @@
     "schemaVersion": 1,
     "properties": {
         "website": {
-            "title": "Website",
+            "title": "Website Domain",
             "type": "string",
             "description": "This is top level domain that will determine in what language will the input and output be. Note that this is really important, for example if i enter 'cz' and then i go from Brno to Prague, it will not work because Prague is in English, so i have two options in this scenario. I can change it to 'com' for example or i can change from 'Prague' to 'Praha', which is Prague in czech",
             "default": "com",
-            "editor": "enum",
+            "editor": "select",
             "enum": [
                 "com",
                 "cz",
