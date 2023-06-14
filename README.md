@@ -53,8 +53,6 @@ The input schema defines the parameters required to configure and customize the 
 
 Please ensure to provide the required properties: `website`, `from`, `to`, `rideDate`, and `proxyConfiguration`.
 
-> **Note:** The `currency` property may not always be available in the response data. In some cases, Flixbus hides the currency information on different pages. As a result, you might receive an empty string (`""`) instead of a specific currency value. Please take this into consideration when processing the scraped data.
-
 > **Note:** You need to provide at least one valid passenger or you will it will error out.
 
 
