@@ -1,8 +1,8 @@
-# Flixbus Search Scraper
+## Flixbus Search Scraper
 
 The Flixbus Search Scraper is a tool that allows you to extract essential information from Flixbus search results. With this scraper, you can easily retrieve the following details:
 
-- 🕒 Departure and arrival times
+- 🕒 Departure and arrival times with duration of the route
 - 💵 Fare prices
 - 🚏 Departure and arrival locations
 - 📶 Available amenities
@@ -49,10 +49,14 @@ The input schema defines the parameters required to configure and customize the 
 
 - `bike_slot` (integer, default: 0): The number of bike slots. Note that E-bikes and scooters are not allowed on buses.
 
-- `proxyConfiguration` (object): Proxy configuration options for using Apify Proxy or your custom proxy.
+- `proxyConfiguration` (object): Proxy configuration options for using Apify Proxy or your custom proxy. Please provide a proxy from a place where cookies policy acceptance is not required.
 
 Please ensure to provide the required properties: `website`, `from`, `to`, `rideDate`, and `proxyConfiguration`.
-Also note that you need to provide at least one valid passenger or you will it will error out.
+
+> **Note:** The `currency` property may not always be available in the response data. In some cases, Flixbus hides the currency information on different pages. As a result, you might receive an empty string (`""`) instead of a specific currency value. Please take this into consideration when processing the scraped data.
+
+> **Note:** You need to provide at least one valid passenger or you will it will error out.
+
 
 ## Getting Started
 

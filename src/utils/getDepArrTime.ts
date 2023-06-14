@@ -19,7 +19,7 @@ const getDepArrTime = (result$: any, rideDate: string, departure = true) => {
   }
 
   return {
-    timestamp: reformatFlixbusDateStringToJSDate(rideDate, depArrTime),
+    timestamp: reformatFlixbusDateStringToJSDate(rideDate, depArrTime) as number,
     text: depArrTime,
   };
 };
