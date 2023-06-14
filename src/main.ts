@@ -31,7 +31,7 @@ const proxyConfig = await checkProxy({
 const crawler = new PlaywrightCrawler({
     proxyConfiguration: proxyConfig,
     requestHandler: router,
-    headless: false
+    headless: true
 });
 
 await crawler.run([
