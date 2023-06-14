@@ -9,7 +9,7 @@ import getFromTo from './getFromTo.js';
 import getCurrency from './getCurrency.js';
 import { DepArr, DepArrTime, Duration, Output, Route } from '../interafaces.js';
 
-const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: string) => {
+const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: string, website: string) => {
   const results = $('ul[data-e2e="search-result-list"]');
 
   const output: Output = { url: finalResultPageUrl, date: rideDate, from: '', to: '', currency: '', routes: [] };
@@ -43,7 +43,7 @@ const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: str
   output.from = fromTo.from;
   output.to = fromTo.to;
 
-  output.currency = getCurrency($);
+  output.currency = getCurrency($, website);
 
   return output;
 };

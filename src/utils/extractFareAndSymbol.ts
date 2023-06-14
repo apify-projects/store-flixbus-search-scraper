@@ -1,4 +1,4 @@
-const extractNumberAndSymbol = (textPrice: string) => {
+const extractFareAndSymbol = (textPrice: string) => {
     let priceFloatString: string = ""
     let symbol: string = ""
 
@@ -27,4 +27,4 @@ const extractNumberAndSymbol = (textPrice: string) => {
     }
 };
 
-export default extractNumberAndSymbol
+export default extractFareAndSymbol

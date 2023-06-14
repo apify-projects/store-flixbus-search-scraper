@@ -9,8 +9,8 @@
         "description": "The top-level domain that determines the language used for input and output. Selecting the appropriate domain is crucial for accurate results. For example, if 'cz' is selected but the destination is 'Prague' (which is in English), it may not work as expected. In such cases, you can change the domain to 'com' or change 'Prague' to 'Praha' (the Czech name for Prague).",
         "default": "com",
         "editor": "select",
-        "enum": ["com", "cz", "sk", "au", "fr", "in"],
-        "enumTitles": [".com", ".cz", ".sk", ".au", ".fr", ".in"]
+        "enum": ["com", "cz", "es", "sk", "fr", "in", "pl"],
+        "enumTitles": [".com (English)", ".cz (Czech)", ".es (Spanish)", ".sk (Slovakian)", ".fr (French)", ".in (Indian)", ".pl (Polish)"]
       },
       "from": {
         "title": "Departing City",

@@ -49,7 +49,7 @@ export interface Route {
     amenities: string[],
     duration: Duration,
     transfers: number
-  }
+}
   
 export interface Output {
     url: string;
@@ -58,4 +58,8 @@ export interface Output {
     to: string;
     currency: string;
     routes: Route[];
-  }
+}
+
+export interface Currencies {
+    [key: string]: string
+}

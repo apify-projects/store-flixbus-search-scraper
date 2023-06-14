@@ -7,9 +7,7 @@ import { FINAL_RESULT_PAGE } from '../constants.js';
 export default async ({ request, page, log }: Handler) => {
     log.info(`Running ${FINAL_RESULT_PAGE} handler`)
 
-    const { rideDate, finalResultPageUrl } = request.userData
-
-    log.info("Scraping", finalResultPageUrl)
+    const { rideDate, finalResultPageUrl, website } = request.userData
 
     // Wait for content to load
     await page.waitForSelector('ul[data-e2e="search-result-list"]')
@@ -19,7 +17,7 @@ export default async ({ request, page, log }: Handler) => {
     const $ = load(content);
 
     // Generate output
-    const output = generateOutput($, finalResultPageUrl, rideDate)
+    const output = generateOutput($, finalResultPageUrl, rideDate, website)
 
     await Dataset.pushData(output)
 }
