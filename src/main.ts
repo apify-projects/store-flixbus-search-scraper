@@ -1,12 +1,5 @@
-/**
- * This template is a production ready boilerplate for developing with `PlaywrightCrawler`.
- * Use this to bootstrap your projects using the most up-to-date code.
- * If you're looking for examples or want to learn more, see README.
- */
-
-// For more information, see https://docs.apify.com/sdk/js
-import { Actor, ProxyConfiguration } from 'apify';
-// For more information, see https://crawlee.dev
+// Imports
+import { Actor } from 'apify';
 import { PlaywrightCrawler } from 'crawlee';
 import { reformatInputToFlixbusDateString } from './utils/reformatDate.js';
 import { router } from './routes.js';
@@ -20,6 +13,7 @@ await Actor.init();
 let inputData: InputType = await Actor.getInput() as InputType;
 const {website, adult, student, children_0_5, children_6_17, senior, proxyConfiguration} = inputData
 
+// Reformat date from input
 inputData.rideDate = reformatInputToFlixbusDateString(inputData.rideDate) // for example 2023-06-19 > 19.06.2023
 
 // Validate input
@@ -30,18 +24,14 @@ if (sumOfPassengers <= 0) {
     Actor.fail("You have to enter atleast one passenger")
 }
 
-console.log("BEFORE", proxyConfiguration)
-
 const proxyConfig = await checkProxy({
     proxyConfig: proxyConfiguration,
 });
 
-console.log("AFTER", proxyConfig)
-
 const crawler = new PlaywrightCrawler({
     proxyConfiguration: proxyConfig,
     requestHandler: router,
-    headless: true
+    headless: false
 });
 
 await crawler.run([

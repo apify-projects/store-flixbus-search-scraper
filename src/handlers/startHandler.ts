@@ -7,8 +7,13 @@ export default async ({ request, page, log, crawler }: Handler) => {
 
     log.info(request.url)
 
-    // Accept cookies
-    await page.click('button[data-testid="uc-accept-all-button"]')
+    try {
+        // Accept cookies
+        await page.click('button[data-testid="uc-accept-all-button"]')
+    } catch (err) {
+        // Means that pag
+        console.log("Accept all button not found")
+    }
 
     // Get keyboard to select from - to
     const keyboard = page.keyboard
