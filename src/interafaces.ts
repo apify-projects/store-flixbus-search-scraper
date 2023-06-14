@@ -1,4 +1,4 @@
-import { ProxyConfiguration, ProxyConfigurationOptions } from 'apify';
+import { ProxyConfigurationOptions } from 'apify';
 import { Request } from 'crawlee';
 import { PlaywrightCrawlingContext, Dictionary } from 'crawlee';
 

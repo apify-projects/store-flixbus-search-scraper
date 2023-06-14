@@ -1,46 +1,58 @@
-import { Handler } from "../interafaces";
+import { Actor } from "apify";
+import { START } from "../constants.js";
+import { Handler } from "../interafaces.js";
+import getFinalResultPageURL from "../utils/getFinalResultPageURL.js";
+import typeWithDelay from "../utils/typeWithDelay.js";
 
 export default async ({ request, page, log, crawler }: Handler) => {
-    const { from, to, website, senior, children_0_5, children_6_17, rideDate, adult, student, bike_slot } = request.userData.data
+    const {data} = request.userData
+    const { from, to } = data
 
-    log.info(`Running START handler`)
+    log.info(`Running ${START} handler`)
 
-    log.info(request.url)
-
-    try {
-        // Accept cookies
-        await page.click('button[data-testid="uc-accept-all-button"]')
-    } catch (err) {
-        // Means that pag
-        console.log("Accept all button not found")
-    }
+    // await page.click('button[data-testid="uc-accept-all-button"]')
 
     // Get keyboard to select from - to
     const keyboard = page.keyboard
 
-    // Type and select from place -> to place
-    await page.click("#searchInput-from")
-    //await page.type("#searchInput-from", from)
-    async function slowType(page: any, selector: string, text: string, delay: number) {
-        const element = await page.$(selector);
-        for (let i = 0; i < text.length; i++) {
-          await element.type(text[i], { delay });
-          await page.waitForTimeout(delay);
-        }
+    try {
+        //
+        // FROM place
+        //
+        
+        // Click on input so that the typing works as expected
+        await page.click("#searchInput-from")
+
+        // Type from place with delay to correctly load autocomplete
+        await typeWithDelay(page, "#searchInput-from", from, 150)
+
+        // Wait for places to load
+        await page.waitForTimeout(400)
+
+        // Select place from
+        await keyboard.press("ArrowDown")
+        await keyboard.press("Enter")
+
+        // 
+        // TO place
+        //
+
+        // Click on input so that the typing works as expected 
+        await page.click("#searchInput-to")
+
+        // Type from place with delay to correctly load autocomplete
+        await typeWithDelay(page, "#searchInput-to", to, 150)
+
+        // Wait for places to load
+        await page.waitForTimeout(400)
+
+        // Select place to
+        await keyboard.press("ArrowDown")
+        await keyboard.press("Enter")
+    } catch (err) {
+        Actor.fail("Something went wrong while trying to enter the from - to place. Make sure that you are using proxies from the country, where there is no cookies acceptance required")
     }
-
-    await slowType(page, "#searchInput-from", from, 200)
-
-
-    await page.waitForTimeout(500)
-    await keyboard.press("ArrowDown")
-    await keyboard.press("Enter")
-
-    await page.click("#searchInput-to")
-    await slowType(page, "#searchInput-to", to, 200)
-    await page.waitForTimeout(500)
-    await keyboard.press("ArrowDown")
-    await keyboard.press("Enter")
+    
 
     // Search for routes
     await page.click('div[data-e2e="search-button"] > button')
@@ -48,38 +60,13 @@ export default async ({ request, page, log, crawler }: Handler) => {
     // Get the current url
     const initialResultUrl = await page.url();
 
-    // Get encoded cities and params I can't recreate from the URL
-    const initialResultPageParams = new URLSearchParams(new URL(initialResultUrl).search);
-    const departureCity = initialResultPageParams.get('departureCity');
-    const arrivalCity = initialResultPageParams.get('arrivalCity');
-    const route = initialResultPageParams.get('route');
-    
-    // Create and go to the next URL with filters
-    const params: Record<string, string> = {
-      departureCity: departureCity || '',
-      arrivalCity: arrivalCity || '',
-      rideDate: rideDate || '',
-      route: route || '',
-      adult: String(adult),
-      student: String(student),
-      children_0_5: String(children_0_5),
-      children_6_17: String(children_6_17),
-      bike_slot: String(bike_slot),
-      senior: String(senior),
-    };
-    
-    const finalResultPageUrl = `https://shop.flixbus.${website}/search?${new URLSearchParams(params)}`;
+    const finalResultPageUrl = getFinalResultPageURL(data, initialResultUrl)
     
     crawler.addRequests([
         {
             url: finalResultPageUrl,
             label: "FINAL_RESULT_PAGE",
-            userData: {
-                data: {
-                    finalResultPageUrl,
-                    rideDate
-                }
-            }
+            userData: data
         }
     ])
 };

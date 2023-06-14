@@ -39,7 +39,7 @@ await crawler.run([
         url: `https://flixbus.${website}/`,
         label: "START",
         userData: {
-            data: inputData
+            data: {...inputData}
         }
     }
 ]);

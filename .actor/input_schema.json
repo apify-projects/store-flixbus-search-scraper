@@ -1,109 +1,96 @@
 {
-    "title": "Input schema for the empty project actor.",
+    "title": "Input schema for the Flixbus Search Scraper",
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "website": {
-            "title": "Website Domain",
-            "type": "string",
-            "description": "This is top level domain that will determine in what language will the input and output be. Note that this is really important, for example if i enter 'cz' and then i go from Brno to Prague, it will not work because Prague is in English, so i have two options in this scenario. I can change it to 'com' for example or i can change from 'Prague' to 'Praha', which is Prague in czech",
-            "default": "com",
-            "editor": "select",
-            "enum": [
-                "com",
-                "cz",
-                "sk",
-                "au",
-                "fr",
-                "in"
-            ],
-            "enumTitles": [
-                ".com",
-                ".cz",
-                ".sk",
-                ".au",
-                ".fr",
-                ".in"
-            ]
+      "website": {
+        "title": "Website Domain",
+        "type": "string",
+        "description": "The top-level domain that determines the language used for input and output. Selecting the appropriate domain is crucial for accurate results. For example, if 'cz' is selected but the destination is 'Prague' (which is in English), it may not work as expected. In such cases, you can change the domain to 'com' or change 'Prague' to 'Praha' (the Czech name for Prague).",
+        "default": "com",
+        "editor": "select",
+        "enum": ["com", "cz", "sk", "au", "fr", "in"],
+        "enumTitles": [".com", ".cz", ".sk", ".au", ".fr", ".in"]
+      },
+      "from": {
+        "title": "Departing City",
+        "type": "string",
+        "description": "The city from which the journey will begin.",
+        "default": "Berlin",
+        "editor": "textfield"
+      },
+      "to": {
+        "title": "Arrival City",
+        "type": "string",
+        "default": "Prague",
+        "description": "The city to which the journey will be made.",
+        "editor": "textfield"
+      },
+      "rideDate": {
+        "title": "Date of Journey",
+        "type": "string",
+        "description": "The date on which the trip will take place.",
+        "editor": "datepicker"
+      },
+      "adult": {
+        "title": "Number of Adults",
+        "type": "integer",
+        "default": 1,
+        "description": "Select the number of adults who will be traveling.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "student": {
+        "title": "Number of Students",
+        "type": "integer",
+        "default": 0,
+        "description": "Select the number of students who will be traveling. Please note that students are required to show a valid student ID.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "children_0_5": {
+        "title": "Number of Children (0-5 years old)",
+        "type": "integer",
+        "default": 0,
+        "description": "Select the number of children (0 to 5 years old) who will be traveling.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "children_6_17": {
+        "title": "Number of Children (6-17 years old)",
+        "type": "integer",
+        "default": 0,
+        "description": "Select the number of children (6 to 17 years old) who will be traveling.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "senior": {
+        "title": "Number of Seniors (65+ years old)",
+        "type": "integer",
+        "default": 0,
+        "description": "Select the number of seniors (65 years old or older) who will be traveling.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "bike_slot": {
+        "title": "Number of Bike Slots",
+        "type": "integer",
+        "default": 0,
+        "description": "Select the number of bike slots required. Please note that E-bikes and scooters are not allowed on buses.",
+        "editor": "number",
+        "minimum": 0
+      },
+      "proxyConfiguration": {
+        "title": "Proxy Configuration",
+        "type": "object",
+        "editor": "proxy",
+        "description": "Choose whether to use Apify Proxy or a custom proxy for the web scraping process.",
+        "default": {
+          "useApifyProxy": true
         },
-        "from": {
-            "title": "From",
-            "type": "string",
-            "description": "This is the departing city. Note that it is key sensitive.",
-            "default": "Berlin",
-            "editor": "textfield"
-        },
-        "to": {
-            "title": "To",
-            "type": "string",
-            "default": "Prague",
-            "description": "This is the arrival city. Note that it is key sensitive.",
-            "editor": "textfield"
-        },
-        "rideDate": {
-            "title": "Date",
-            "type": "string",
-            "description": "Date of the trip.",
-            "editor": "datepicker"
-        },
-        "adult": {
-            "title": "Adults",
-            "type": "integer",
-            "default": 1,
-            "description": "Select number of adults traveling.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "student": {
-            "title": "Students",
-            "type": "integer",
-            "default": 0,
-            "description": "Select number of students traveling, note that students are required to show valid Student ID.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "children_0_5": {
-            "title": "Children (0-5)",
-            "type": "integer",
-            "default": 0,
-            "description": "Select number of children (0 to 5 years old) traveling.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "children_6_17": {
-            "title": "Children (6-17)",
-            "type": "integer",
-            "default": 0,
-            "description": "Select number of children (6 to 17 years old) traveling.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "senior": {
-            "title": "Seniors",
-            "type": "integer",
-            "default": 0,
-            "description": "Select number of seniors (older than 65 years old) traveling.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "bike_slot": {
-            "title": "Bikes",
-            "type": "integer",
-            "default": 0,
-            "description": "Select number of bike slots, note that E-bikes and scooters are not allowed on buses.",
-            "editor": "number",
-            "minimum": 0
-        },
-        "proxyConfiguration": {
-            "title": "Proxy configuration",
-            "type": "object",
-            "editor": "proxy",
-            "description": "Use Apify Proxy or your custom Proxy.",
-            "default": {
-                "useApifyProxy": true
-            },
-            "sectionCaption": "Proxy"
-        }
+        "sectionCaption": "Proxy"
+      }
     },
     "required": ["website", "from", "to", "rideDate", "proxyConfiguration"]
-}
+  }
+  
