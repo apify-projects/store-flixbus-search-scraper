@@ -14,7 +14,7 @@ await Actor.init();
 let inputData: InputType = await Actor.getInput() as InputType;
 const {lang, adult, student, children_0_5, children_6_17, senior, bike_slot, proxyConfiguration} = inputData
 
-// Reformat date from input
+// Reformat date format from input to format that flix uses
 inputData.rideDate = reformatInputToFlixbusDateString(inputData.rideDate) // for example 2023-06-19 > 19.06.2023
 
 // Validate input
@@ -25,14 +25,12 @@ if (sumOfPassengers <= 0) {
     Actor.fail("You have to enter atleast one passenger")
 }
 
-// Set up proxies
 const proxyConfig = await checkProxy({
     proxyConfig: proxyConfiguration,
 });
 
 log.info('headless mode: ' + (process.env.HEADLESS === "false" ? false : true));
 
-// Configure PlaywrightCrawler
 const crawler = new PlaywrightCrawler({
     proxyConfiguration: proxyConfig,
     requestHandler: router,
@@ -58,7 +56,6 @@ const params: Record<string, string> = {
 
 const searchParams = new URLSearchParams(params)
 
-// Run crawler
 await crawler.run([
     {
         url: `https://shop.flixbus${getDomainFromLang(lang)}/search?${searchParams}`,

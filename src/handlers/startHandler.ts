@@ -6,6 +6,8 @@ import typeWithDelay from "../utils/typeWithDelay.js";
 import {load} from "cheerio"
 
 export default async ({ request, page, log }: Handler) => {
+    if (request.retryCount > 2) Actor.fail("Max retries exceeded")
+    
     const {data} = request.userData
     const { from, to, lang, finalResultPageUrl, rideDate } = data
 
@@ -15,9 +17,7 @@ export default async ({ request, page, log }: Handler) => {
     const keyboard = page.keyboard
 
     try {
-        //
-        // FROM place
-        //
+        // ==== FROM place ====
         
         await page.waitForSelector("#searchInput-from")
 
@@ -34,9 +34,9 @@ export default async ({ request, page, log }: Handler) => {
         await keyboard.press("ArrowDown")
         await keyboard.press("Enter")
 
-        // 
-        // TO place
-        //
+        // ==== FROM place ====
+
+        // ==== TO place ====
 
         // Click on input so that the typing works as expected 
         await page.click("#searchInput-to")
@@ -47,22 +47,25 @@ export default async ({ request, page, log }: Handler) => {
         // Wait for places to load
         await page.waitForTimeout(450)
 
+        // ==== TO place ====
+
         // Select place to
         await keyboard.press("ArrowDown")
         await keyboard.press("Enter")
+
     } catch (err) {
         Actor.fail("Something went wrong while trying to enter the from - to place. Make sure that you are using proxies from the country, where there is no cookies acceptance required")
     }
     
+    // This will ensure that user entered valid input and that we can search
     await Promise.race([
         page.click('div[data-e2e="search-button"] > button'),
-        page.waitForEvent('console', { timeout: 1000 }) // Wait for a console event to occur within 2 seconds
+        page.waitForEvent('console', { timeout: 500 }) // Wait for a console event to occur within .5 seconds
     ]);
 
-    // Wait for content to load
+    // Wait for final  output
     await page.waitForSelector('ul[data-e2e="search-result-list"]')
 
-    // Get and load content to cheerio parser
     const content = await page.content();
     const $ = load(content);
     
