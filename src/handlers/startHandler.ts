@@ -56,15 +56,11 @@ export default async ({ request, page, log }: Handler) => {
     } catch (err) {
         Actor.fail("Something went wrong while trying to enter the from - to place. Make sure that you are using proxies from the country, where there is no cookies acceptance required")
     }
-    
-    const screenshot = await page.screenshot();
-    // Save the screenshot to the default key-value store
-    await Actor.setValue('before-search', screenshot, { contentType: 'image/png' });
 
     // This will ensure that user entered valid input and that we can search
     await Promise.race([
         page.click('div[data-e2e="search-button"] > button'),
-        page.waitForEvent('console', { timeout: 500 }) // Wait for a console event to occur within .5 seconds
+        page.waitForEvent('console', { timeout: 1500 }) // Wait for a console event to occur within 1.5 seconds
     ]);
 
     // Wait for final  output
