@@ -1,5 +1,5 @@
 // Imports
-import { Actor } from 'apify';
+import { Actor, log } from 'apify';
 import { PlaywrightCrawler } from 'crawlee';
 import { reformatInputToFlixbusDateString } from './utils/reformatDate.js';
 import { router } from './routes.js';
@@ -29,6 +29,8 @@ if (sumOfPassengers <= 0) {
 const proxyConfig = await checkProxy({
     proxyConfig: proxyConfiguration,
 });
+
+log.info('headless mode: ' + (process.env.HEADLESS === "false" ? false : true));
 
 // Configure PlaywrightCrawler
 const crawler = new PlaywrightCrawler({

@@ -36,7 +36,7 @@
         "title": "Number of Adults",
         "type": "integer",
         "default": 1,
-        "description": "Select the number of adults who will be traveling.",
+        "description": "Select the number of adults who will be traveling. All routes should support this type.",
         "editor": "number",
         "minimum": 0
       },
@@ -44,7 +44,7 @@
         "title": "Number of Students",
         "type": "integer",
         "default": 0,
-        "description": "Select the number of students who will be traveling. Please note that students are required to show a valid student ID.",
+        "description": "Select the number of students who will be traveling. Please note that students are required to show a valid student ID. Please note that not all routes support this type and you might get result without this value.",
         "editor": "number",
         "minimum": 0
       },
@@ -52,7 +52,7 @@
         "title": "Number of Children (0-5 years old)",
         "type": "integer",
         "default": 0,
-        "description": "Select the number of children (0 to 5 years old) who will be traveling.",
+        "description": "Select the number of children (0 to 5 years old) who will be traveling. Please note that not all routes support this type and you might get result without this value.",
         "editor": "number",
         "minimum": 0
       },
@@ -60,7 +60,7 @@
         "title": "Number of Children (6-17 years old)",
         "type": "integer",
         "default": 0,
-        "description": "Select the number of children (6 to 17 years old) who will be traveling.",
+        "description": "Select the number of children (6 to 17 years old) who will be traveling. Please note that not all routes support this type and you might get result without this value.",
         "editor": "number",
         "minimum": 0
       },
@@ -68,7 +68,7 @@
         "title": "Number of Seniors (65+ years old)",
         "type": "integer",
         "default": 0,
-        "description": "Select the number of seniors (65 years old or older) who will be traveling.",
+        "description": "Select the number of seniors (65 years old or older) who will be traveling. Please note that not all routes support this type and you might get result without this value.",
         "editor": "number",
         "minimum": 0
       },
@@ -76,7 +76,7 @@
         "title": "Number of Bike Slots",
         "type": "integer",
         "default": 0,
-        "description": "Select the number of bike slots required. Please note that E-bikes and scooters are not allowed on buses.",
+        "description": "Select the number of bike slots required. Please note that E-bikes and scooters are not allowed on buses. Please note that not all routes support this type and you might get result without this value.",
         "editor": "number",
         "minimum": 0
       },
