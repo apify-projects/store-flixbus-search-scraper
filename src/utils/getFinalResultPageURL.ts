@@ -2,8 +2,8 @@ import { InputType } from "../interafaces";
 
 // Get encoded cities and params I can't recreate from the URL
 const getFinalResultPageURL = (data: InputType, initialResultUrl: string) => {
-    const { website, senior, children_0_5, children_6_17, rideDate, adult, student, bike_slot } = data
-    
+    const { senior, children_0_5, children_6_17, rideDate, adult, student, bike_slot } = data
+
     const initialResultPageParams = new URLSearchParams(new URL(initialResultUrl).search);
     const departureCity = initialResultPageParams.get('departureCity');
     const arrivalCity = initialResultPageParams.get('arrivalCity');
@@ -23,7 +23,7 @@ const getFinalResultPageURL = (data: InputType, initialResultUrl: string) => {
         senior: String(senior),
     };
 
-    return `https://shop.flixbus.${website}/search?${new URLSearchParams(params)}`;
+    return `${initialResultUrl.split("/search?")[0]}/search?${new URLSearchParams(params)}`;
 }
 
 export default getFinalResultPageURL

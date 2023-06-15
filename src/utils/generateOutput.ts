@@ -9,10 +9,10 @@ import getFromTo from './getFromTo.js';
 import getCurrency from './getCurrency.js';
 import { DepArr, DepArrTime, Duration, Output, Route } from '../interafaces.js';
 
-const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: string, website: string) => {
+const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: string, lang: string) => {
   const results = $('ul[data-e2e="search-result-list"]');
 
-  const output: Output = { url: finalResultPageUrl, date: rideDate, from: '', to: '', currency: '', routes: [] };
+  const output: Output = { url: finalResultPageUrl, date: rideDate, lang, passengers: [], from: '', to: '', currency: '', routes: [] };
 
   // Iterate over the children of the <ul> element
   results.children().each((_i, result) => {
@@ -39,11 +39,13 @@ const generateOutput = ($: CheerioAPI, finalResultPageUrl: string, rideDate: str
     output.routes.push(newRoute);
   });
 
+  output.passengers = $('input[id="productSummary"]').val()?.toString().toLowerCase().split(", ") as string[]
+
   const fromTo: any = getFromTo($);
   output.from = fromTo.from;
   output.to = fromTo.to;
 
-  output.currency = getCurrency($, website);
+  output.currency = getCurrency($, lang);
 
   return output;
 };

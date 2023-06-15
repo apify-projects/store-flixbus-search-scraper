@@ -29,7 +29,7 @@ There are several advantages to using the Flixbus Search Scraper:
 
 The input schema defines the parameters required to configure and customize the Flixbus Search Scraper. Here are the available input properties:
 
-- `website` (string, default: "com"): The top-level domain for the website. Determines the language of the input and output data.
+- `lang` (string, default: "English (US)"): The language that will be used. Determines the language of the input and output data.
 
 - `from` (string, default: "Berlin"): The departing city for the search.
 
@@ -51,9 +51,9 @@ The input schema defines the parameters required to configure and customize the 
 
 - `proxyConfiguration` (object): Proxy configuration options for using Apify Proxy or your custom proxy. Please provide a proxy from a place where cookies policy acceptance is not required.
 
-Please ensure to provide the required properties: `website`, `from`, `to`, `rideDate`, and `proxyConfiguration`.
+Please ensure to provide the required properties: `from`, `to`, `rideDate`, and `proxyConfiguration`.
 
-> **Note:** You need to provide at least one valid passenger or you will it will error out.
+> **Note:** You need to provide at least one valid passenger or you will it will error out. Please note that the available passenger types may vary depending on the specific route and country. For instance, when traveling from Prague to Brno, you will have the option to select "students" as a passenger type, whereas when traveling from Prague to Berlin, this option may not be available. In such cases, please refrain from selecting passenger types other than "adults."
 
 
 ## Getting Started
@@ -62,7 +62,7 @@ To get started with the Flixbus Search Scraper, follow these steps:
 
 1. Install the Apify Client or utilize the Apify API.
 
-2. Configure the input parameters such as website domain, departure and arrival cities, travel dates, and the number of passengers.
+2. Configure the input parameters such as language, departure and arrival cities, travel dates, and the number of passengers.
 
 3. Run the scraper and retrieve the extracted Flixbus search results.
 
@@ -87,10 +87,10 @@ const client = new ApifyClient({
 
 // Define your input parameters
 const input = {
-  website: 'com',
+  lang: 'en-gb',
   from: 'Berlin',
   to: 'Prague',
-  rideDate: '2023-06-19',
+  rideDate: '2023-06-19', // Change this to your current date
   adult: 1,
   student: 0,
   children_0_5: 0,

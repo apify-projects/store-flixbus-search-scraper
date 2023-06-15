@@ -3,14 +3,14 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-      "website": {
-        "title": "Website Domain",
+      "lang": {
+        "title": "Language",
         "type": "string",
-        "description": "The top-level domain that determines the language used for input and output. Selecting the appropriate domain is crucial for accurate results. For example, if 'cz' is selected but the destination is 'Prague' (which is in English), it may not work as expected. In such cases, you can change the domain to 'com' or change 'Prague' to 'Praha' (the Czech name for Prague).",
-        "default": "com",
+        "description": "The language used for input and output. Selecting the appropriate language for accurate results. For example, if 'Czech' is selected but the destination is 'Prague' (which is in English), it may not work as expected. In such cases, you can change the language 'Czech' or change 'Prague' to 'Praha' (the Czech name for Prague).",
+        "default": "en-us",
         "editor": "select",
-        "enum": ["com", "cz", "es", "sk", "fr", "in", "pl"],
-        "enumTitles": [".com (English)", ".cz (Czech)", ".es (Spanish)", ".sk (Slovakian)", ".fr (French)", ".in (Indian)", ".pl (Polish)"]
+        "enum": ["sk", "cs", "hr", "en-us", "en-gb", "fr", "es"],
+        "enumTitles": ["Slovakian", "Czech", "Croatian", "English (US)", "English (UK)", "France", "Spanish"]
       },
       "from": {
         "title": "Departing City",
@@ -91,6 +91,6 @@
         "sectionCaption": "Proxy"
       }
     },
-    "required": ["website", "from", "to", "rideDate", "proxyConfiguration"]
+    "required": ["from", "to", "rideDate", "proxyConfiguration"]
   }
   

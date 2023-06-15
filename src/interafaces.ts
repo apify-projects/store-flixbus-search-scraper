@@ -3,7 +3,7 @@ import { Request } from 'crawlee';
 import { PlaywrightCrawlingContext, Dictionary } from 'crawlee';
 
 export interface InputType {
-    website: string;
+    lang: string;
     from: string;
     to: string;
     rideDate: string;
@@ -52,6 +52,8 @@ export interface Route {
 }
   
 export interface Output {
+    passengers: string[]
+    lang: string,
     url: string;
     date: string;
     from: string;
@@ -61,5 +63,10 @@ export interface Output {
 }
 
 export interface Currencies {
+    [key: string]: string
+}
+
+
+export interface Domains {
     [key: string]: string
 }

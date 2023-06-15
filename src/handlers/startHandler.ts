@@ -1,16 +1,15 @@
-import { Actor } from "apify";
+import { Actor, Dataset } from "apify";
 import { START } from "../constants.js";
 import { Handler } from "../interafaces.js";
-import getFinalResultPageURL from "../utils/getFinalResultPageURL.js";
+import generateOutput from "../utils/generateOutput.js";
 import typeWithDelay from "../utils/typeWithDelay.js";
+import {load} from "cheerio"
 
-export default async ({ request, page, log, crawler }: Handler) => {
+export default async ({ request, page, log }: Handler) => {
     const {data} = request.userData
-    const { from, to } = data
+    const { from, to, lang, finalResultPageUrl, rideDate } = data
 
     log.info(`Running ${START} handler`)
-
-    // await page.click('button[data-testid="uc-accept-all-button"]')
 
     // Get keyboard to select from - to
     const keyboard = page.keyboard
@@ -20,14 +19,16 @@ export default async ({ request, page, log, crawler }: Handler) => {
         // FROM place
         //
         
+        await page.waitForSelector("#searchInput-from")
+
         // Click on input so that the typing works as expected
         await page.click("#searchInput-from")
 
         // Type from place with delay to correctly load autocomplete
-        await typeWithDelay(page, "#searchInput-from", from, 150)
+        await typeWithDelay(page, "#searchInput-from", from, 200)
 
         // Wait for places to load
-        await page.waitForTimeout(400)
+        await page.waitForTimeout(450)
 
         // Select place from
         await keyboard.press("ArrowDown")
@@ -41,10 +42,10 @@ export default async ({ request, page, log, crawler }: Handler) => {
         await page.click("#searchInput-to")
 
         // Type from place with delay to correctly load autocomplete
-        await typeWithDelay(page, "#searchInput-to", to, 150)
+        await typeWithDelay(page, "#searchInput-to", to, 200)
 
         // Wait for places to load
-        await page.waitForTimeout(400)
+        await page.waitForTimeout(450)
 
         // Select place to
         await keyboard.press("ArrowDown")
@@ -53,20 +54,25 @@ export default async ({ request, page, log, crawler }: Handler) => {
         Actor.fail("Something went wrong while trying to enter the from - to place. Make sure that you are using proxies from the country, where there is no cookies acceptance required")
     }
     
-
     // Search for routes
-    await page.click('div[data-e2e="search-button"] > button')
+    try {
+        await Promise.race([
+          page.click('div[data-e2e="search-button"] > button'),
+          page.waitForEvent('console', { timeout: 1000 }) // Wait for a console event to occur within 2 seconds
+        ]);
+    } catch (err) {
+        Actor.fail('Invalid from or to values');
+    }
 
-    // Get the current url
-    const initialResultUrl = await page.url();
+    // Wait for content to load
+    await page.waitForSelector('ul[data-e2e="search-result-list"]')
 
-    const finalResultPageUrl = getFinalResultPageURL(data, initialResultUrl)
+    // Get and load content to cheerio parser
+    const content = await page.content();
+    const $ = load(content);
     
-    crawler.addRequests([
-        {
-            url: finalResultPageUrl,
-            label: "FINAL_RESULT_PAGE",
-            userData: data
-        }
-    ])
+    // Generate output
+    const output = generateOutput($, finalResultPageUrl, rideDate, lang)
+
+    await Dataset.pushData(output)
 };
