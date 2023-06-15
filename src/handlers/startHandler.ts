@@ -72,6 +72,5 @@ export default async ({ request, page, log }: Handler) => {
     // Generate output
     const output = generateOutput($, finalResultPageUrl, rideDate, lang)
 
-    //await Dataset.pushData(output)
-    await Actor.setValue('OUTPUT', output);
+    await Dataset.pushData(output)
 };
