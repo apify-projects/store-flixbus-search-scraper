@@ -36,7 +36,13 @@ log.info('headless mode: ' + (process.env.HEADLESS === "false" ? false : true));
 const crawler = new PlaywrightCrawler({
     proxyConfiguration: proxyConfig,
     requestHandler: router,
-    headless: process.env.HEADLESS === "false" ? false : true
+    headless: process.env.HEADLESS === "false" ? false : true,
+    sessionPoolOptions: {
+        sessionOptions: {
+            maxUsageCount: 5,
+            maxErrorScore: 1,
+        },
+    },
 });
 
 // Create params for initial page

@@ -54,15 +54,10 @@ export default async ({ request, page, log }: Handler) => {
         Actor.fail("Something went wrong while trying to enter the from - to place. Make sure that you are using proxies from the country, where there is no cookies acceptance required")
     }
     
-    // Search for routes
-    try {
-        await Promise.race([
-          page.click('div[data-e2e="search-button"] > button'),
-          page.waitForEvent('console', { timeout: 1000 }) // Wait for a console event to occur within 2 seconds
-        ]);
-    } catch (err) {
-        Actor.fail('Invalid from or to values');
-    }
+    await Promise.race([
+        page.click('div[data-e2e="search-button"] > button'),
+        page.waitForEvent('console', { timeout: 1000 }) // Wait for a console event to occur within 2 seconds
+    ]);
 
     // Wait for content to load
     await page.waitForSelector('ul[data-e2e="search-result-list"]')
