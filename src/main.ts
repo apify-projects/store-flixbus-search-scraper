@@ -7,10 +7,8 @@ import { InputType } from './interafaces.js';
 import { checkProxy } from './utils/checkProxy.js';
 import { getDomainFromLang } from './utils/getDomainFromLang.js';
 
-// Initialize the Apify SDK
 await Actor.init();
 
-// Get users input
 const inputData: InputType = await Actor.getInput() as InputType;
 // eslint-disable-next-line camelcase
 const { lang, adult, student, children_0_5, children_6_17, senior, bike_slot, proxyConfiguration } = inputData;
@@ -18,15 +16,12 @@ const { lang, adult, student, children_0_5, children_6_17, senior, bike_slot, pr
 // Reformat date format from input to format that flix uses
 inputData.rideDate = reformatInputToFlixbusDateString(inputData.rideDate); // for example 2023-06-19 > 19.06.2023
 
-// Validate input
+// Validate input by checking if the sum of passengers is above 0
 // eslint-disable-next-line camelcase
 const passengers: number[] = [adult, student, children_0_5, children_6_17, senior];
-let sumOfPassengers = 0;
-for (const passenger of passengers) sumOfPassengers += passenger;
-if (sumOfPassengers <= 0) {
-    Actor.fail('You have to enter atleast one passenger');
+for (const passenger of passengers) {
+    if (passenger < 0) Actor.fail('You have to enter invalid passenger amount');
 }
-
 const proxyConfig = await checkProxy({
     proxyConfig: proxyConfiguration,
 });
@@ -68,5 +63,4 @@ await crawler.run([
     },
 ]);
 
-// Exit successfully
 await Actor.exit();

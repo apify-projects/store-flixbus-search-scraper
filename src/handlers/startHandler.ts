@@ -13,7 +13,6 @@ export const startHandler = async ({ request, page, log }: Handler) => {
 
     log.info(`Running ${START} handler`);
 
-    // Get keyboard to select from - to
     const { keyboard } = page;
 
     try {
@@ -65,6 +64,7 @@ export const startHandler = async ({ request, page, log }: Handler) => {
     // Wait for final  output
     await page.waitForSelector('ul[data-e2e="search-result-list"]');
 
+    // Parse the html of the result page
     const content = await page.content();
     const $ = load(content);
 

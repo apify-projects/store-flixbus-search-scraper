@@ -90,7 +90,6 @@
         },
         "sectionCaption": "Proxy"
       }
-    },
-    "required": ["from", "to", "rideDate", "proxyConfiguration"]
+    }
   }
   
