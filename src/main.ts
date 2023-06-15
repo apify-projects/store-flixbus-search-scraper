@@ -5,36 +5,38 @@ import { reformatInputToFlixbusDateString } from './utils/reformatDate.js';
 import { router } from './routes.js';
 import { InputType } from './interafaces.js';
 import { checkProxy } from './utils/checkProxy.js';
-import getDomainFromLang from './utils/getDomainFromLang.js';
+import { getDomainFromLang } from './utils/getDomainFromLang.js';
 
 // Initialize the Apify SDK
 await Actor.init();
 
 // Get users input
-let inputData: InputType = await Actor.getInput() as InputType;
-const {lang, adult, student, children_0_5, children_6_17, senior, bike_slot, proxyConfiguration} = inputData
+const inputData: InputType = await Actor.getInput() as InputType;
+// eslint-disable-next-line camelcase
+const { lang, adult, student, children_0_5, children_6_17, senior, bike_slot, proxyConfiguration } = inputData;
 
 // Reformat date format from input to format that flix uses
-inputData.rideDate = reformatInputToFlixbusDateString(inputData.rideDate) // for example 2023-06-19 > 19.06.2023
+inputData.rideDate = reformatInputToFlixbusDateString(inputData.rideDate); // for example 2023-06-19 > 19.06.2023
 
 // Validate input
-const passengers: number[] = [adult, student, children_0_5, children_6_17, senior]
-let sumOfPassengers = 0
-for (const passenger of passengers) sumOfPassengers += passenger
+// eslint-disable-next-line camelcase
+const passengers: number[] = [adult, student, children_0_5, children_6_17, senior];
+let sumOfPassengers = 0;
+for (const passenger of passengers) sumOfPassengers += passenger;
 if (sumOfPassengers <= 0) {
-    Actor.fail("You have to enter atleast one passenger")
+    Actor.fail('You have to enter atleast one passenger');
 }
 
 const proxyConfig = await checkProxy({
     proxyConfig: proxyConfiguration,
 });
 
-log.info('headless mode: ' + (process.env.HEADLESS === "false" ? false : true));
+log.info(`headless mode: ${process.env.HEADLESS !== 'false'}`);
 
 const crawler = new PlaywrightCrawler({
     proxyConfiguration: proxyConfig,
     requestHandler: router,
-    headless: process.env.HEADLESS === "false" ? false : true,
+    headless: process.env.HEADLESS !== 'false',
     sessionPoolOptions: {
         sessionOptions: {
             maxUsageCount: 5,
@@ -51,19 +53,19 @@ const params: Record<string, string> = {
     children_6_17: String(children_6_17),
     bike_slot: String(bike_slot),
     senior: String(senior),
-    rideDate: inputData.rideDate
+    rideDate: inputData.rideDate,
 };
 
-const searchParams = new URLSearchParams(params)
+const searchParams = new URLSearchParams(params);
 
 await crawler.run([
     {
         url: `https://shop.flixbus${getDomainFromLang(lang)}/search?${searchParams}`,
-        label: "START",
+        label: 'START',
         userData: {
-            data: inputData
-        }
-    }
+            data: inputData,
+        },
+    },
 ]);
 
 // Exit successfully

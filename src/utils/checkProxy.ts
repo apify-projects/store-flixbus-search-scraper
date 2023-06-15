@@ -1,4 +1,4 @@
-import { ProxyConfiguration, ProxyConfigurationOptions, Actor } from "apify";
+import { ProxyConfiguration, ProxyConfigurationOptions, Actor } from 'apify';
 
 export const checkProxy = async ({
     proxyConfig,

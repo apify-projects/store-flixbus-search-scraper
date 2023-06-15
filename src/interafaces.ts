@@ -1,6 +1,5 @@
 import { ProxyConfigurationOptions } from 'apify';
-import { Request } from 'crawlee';
-import { PlaywrightCrawlingContext, Dictionary } from 'crawlee';
+import { Request, PlaywrightCrawlingContext, Dictionary } from 'crawlee';
 
 export interface InputType {
     lang: string;
@@ -16,6 +15,16 @@ export interface InputType {
     proxyConfiguration: ProxyConfigurationOptions
 }
 
+export interface DurationResult {
+    text: string | undefined;
+    value: number;
+}
+
+export interface FromToResult {
+    from: string | undefined;
+    to: string | undefined;
+  }
+
 export interface Handler extends Omit<PlaywrightCrawlingContext<Dictionary>, 'request'> {
     request: Request<Dictionary>;
 }
@@ -24,7 +33,7 @@ export interface DepArr {
     time: DepArrTime,
     place: string
 }
-  
+
 export interface DepArrTime {
     text: string,
     timestamp: number
@@ -50,7 +59,7 @@ export interface Route {
     duration: Duration,
     transfers: number
 }
-  
+
 export interface Output {
     passengers: string[]
     lang: string,
@@ -65,7 +74,6 @@ export interface Output {
 export interface Currencies {
     [key: string]: string
 }
-
 
 export interface Domains {
     [key: string]: string

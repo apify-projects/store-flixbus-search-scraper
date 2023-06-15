@@ -1,18 +1,12 @@
 import { CheerioAPI } from 'cheerio';
+import { FromToResult } from '../interafaces';
 
-interface FromToResult {
-  from: string | undefined;
-  to: string | undefined;
-}
+export const getFromTo = ($: CheerioAPI): FromToResult => {
+    const fromElement: any = $('#searchInput-from');
+    const toElement: any = $('#searchInput-to');
 
-const getFromTo = ($: CheerioAPI): FromToResult => {
-  const fromElement: any = $('#searchInput-from');
-  const toElement: any = $('#searchInput-to');
-
-  return {
-    from: fromElement?.val()?.trim(),
-    to: toElement?.val()?.trim(),
-  };
+    return {
+        from: fromElement?.val()?.trim(),
+        to: toElement?.val()?.trim(),
+    };
 };
-
-export default getFromTo;

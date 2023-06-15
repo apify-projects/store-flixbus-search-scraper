@@ -1,1 +1,1 @@
-export const START: string = "START"
+export const START = 'START';
