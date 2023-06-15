@@ -8,7 +8,7 @@ const currencies: Currencies = {
   "sk": "EUR",
   "en-gb": "EUR",
   "es": "EUR",
-  "en-us": "INR",
+  "en-us": "USD",
   "hr": "EUR",
   "fr": "EUR"
 }
